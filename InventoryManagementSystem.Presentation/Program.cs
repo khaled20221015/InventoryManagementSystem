@@ -24,6 +24,9 @@ else
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Home/HttpError", "?code={0}");
+
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
