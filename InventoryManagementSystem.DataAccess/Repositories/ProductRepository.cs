@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InventoryManagementSystem.DataAccess.Data;
+﻿using InventoryManagementSystem.DataAccess.Data;
 using InventoryManagementSystem.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace InventoryManagementSystem.DataAccess.Repositories
 {
@@ -23,6 +17,7 @@ namespace InventoryManagementSystem.DataAccess.Repositories
         {
             return await _context.Products
                 .Include(p => p.Category)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
@@ -31,6 +26,12 @@ namespace InventoryManagementSystem.DataAccess.Repositories
             return await _context.Products
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+
+        public async Task<bool> NameExistsAsync(string name, int excludeId)
+        {
+            return await _context.Products.AnyAsync(p => p.Name == name && p.Id != excludeId);
         }
 
         public async Task AddAsync(Product product)
