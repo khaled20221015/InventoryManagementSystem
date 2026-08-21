@@ -28,6 +28,18 @@ namespace InventoryManagementSystem.Presentation.Controllers
         }
 
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
 
 
         [Authorize(Roles = RoleNames.Admin)]
