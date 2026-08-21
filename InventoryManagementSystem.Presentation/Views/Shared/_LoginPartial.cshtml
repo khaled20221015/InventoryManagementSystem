@@ -1,0 +1,25 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+<ul class="navbar-nav align-items-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item me-3">
+            <span class="navbar-text small">
+                @User.Identity!.Name
+                <span class="badge bg-secondary ms-1">
+                    @(User.IsInRole(RoleNames.Admin) ? RoleNames.Admin : RoleNames.Employee)
+                </span>
+            </span>
+        </li>
+        <li class="nav-item">
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-light">Sign out</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Sign in</a></li>
+    }
+</ul>
