@@ -1,0 +1,55 @@
+﻿@model List<UserListItemViewModel>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h4 class="mb-3">Users</h4>
+
+<div class="card shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+            <tr>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th class="text-end">Change role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="fw-semibold">@user.FullName</td>
+                    <td class="text-muted">@user.Email</td>
+                    <td>
+                        @if (user.Role == RoleNames.Admin)
+                        {
+                            <span class="badge bg-dark">@user.Role</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@user.Role</span>
+                        }
+                    </td>
+                    <td class="text-end">
+                        <form asp-action="ChangeRole" method="post" class="d-inline-flex gap-2 justify-content-end">
+                            <input type="hidden" name="id" value="@user.Id" />
+
+                            <select name="role" class="form-select form-select-sm" style="width: auto">
+                                <option value="@RoleNames.Employee" selected="@(user.Role == RoleNames.Employee)">@RoleNames.Employee</option>
+                                <option value="@RoleNames.Admin" selected="@(user.Role == RoleNames.Admin)">@RoleNames.Admin</option>
+                            </select>
+
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<p class="text-muted small mt-3 mb-0">
+    Accounts are never deleted: stock movements reference the user who recorded them,
+    so removing an account would destroy the audit trail.
+</p>
