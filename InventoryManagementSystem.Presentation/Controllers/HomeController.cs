@@ -23,17 +23,32 @@ namespace InventoryManagementSystem.Presentation.Controllers
             var products = await _productService.GetAllAsync();
             var categories = await _categoryService.GetAllAsync();
 
+            var topProducts = products
+                .OrderByDescending(p => p.StockQuantity)
+                .Take(10)
+                .ToList();
+
             var model = new DashboardViewModel
             {
                 TotalProducts = products.Count,
                 TotalCategories = categories.Count,
                 LowStockProducts = products
                     .Where(p => p.StockQuantity <= p.MinimumStockLevel)
-                    .ToList()
+                    .ToList(),
+
+                CategoryNames = categories.Select(c => c.Name).ToList(),
+                ProductsPerCategory = categories
+                    .Select(c => products.Count(p => p.CategoryId == c.Id))
+                    .ToList(),
+
+                TopProductNames = topProducts.Select(p => p.Name).ToList(),
+                TopProductQuantities = topProducts.Select(p => p.StockQuantity).ToList()
             };
 
             return View(model);
         }
+
+
 
         [AllowAnonymous]
         public IActionResult Privacy() => View();
