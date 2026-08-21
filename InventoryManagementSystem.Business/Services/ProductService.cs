@@ -15,10 +15,11 @@ namespace InventoryManagementSystem.Business.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(string? search = null, int? categoryId = null)
         {
-            return await _productRepository.GetAllAsync();
+            return await _productRepository.GetAllAsync(search, categoryId);
         }
+
 
         public async Task<Product?> GetByIdAsync(int id)
         {
