@@ -1,0 +1,46 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h4 class="mb-3">@Model.Name</h4>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">@Model.Category?.Name</dd>
+
+            <dt class="col-sm-3">Price</dt>
+            <dd class="col-sm-9">@Model.Price.ToString("N2")</dd>
+
+            <dt class="col-sm-3">Stock quantity</dt>
+            <dd class="col-sm-9">
+                @if (Model.StockQuantity <= Model.MinimumStockLevel)
+                {
+                    <span class="badge bg-danger">@Model.StockQuantity — low stock</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">@Model.StockQuantity</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Minimum stock level</dt>
+            <dd class="col-sm-9">@Model.MinimumStockLevel</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Description) ? "—" : Model.Description)</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3 d-flex gap-2">
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+    <a asp-controller="Stock" asp-action="Create" class="btn btn-outline-primary">Record movement</a>
+
+    @if (User.IsInRole(RoleNames.Admin))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    }
+</div>
