@@ -13,13 +13,27 @@ namespace InventoryManagementSystem.DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(string? search = null, int? categoryId = null)
         {
-            return await _context.Products
+            var query = _context.Products
                 .Include(p => p.Category)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(p => p.Name.Contains(search));
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            return await query
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
+
 
         public async Task<Product?> GetByIdAsync(int id)
         {
