@@ -39,5 +39,7 @@ namespace InventoryManagementSystem.DataAccess.Models
 
         // Navigation Property
         public List<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
+
+        // Represents a product in the inventory system.
     }
 }
