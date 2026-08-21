@@ -1,8 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h4 class="mb-4">Dashboard</h4>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="text-muted small text-uppercase mb-1">Products</p>
+                <p class="display-6 mb-0">@Model.TotalProducts</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="text-muted small text-uppercase mb-1">Categories</p>
+                <p class="display-6 mb-0">@Model.TotalCategories</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="text-muted small text-uppercase mb-1">Low stock</p>
+                <p class="display-6 mb-0 text-danger">@Model.LowStockProducts.Count</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white fw-semibold">Low stock alerts</div>
+
+    @if (Model.LowStockProducts.Count == 0)
+    {
+        <div class="card-body text-muted">All products are above their minimum stock level.</div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th class="text-end">Stock</th>
+                    <th class="text-end">Min. level</th>
+                    <th class="text-end"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.LowStockProducts)
+                {
+                    <tr>
+                        <td class="fw-semibold">@product.Name</td>
+                        <td>@product.Category?.Name</td>
+                        <td class="text-end"><span class="badge bg-danger">@product.StockQuantity</span></td>
+                        <td class="text-end text-muted">@product.MinimumStockLevel</td>
+                        <td class="text-end">
+                            <a asp-controller="Stock" asp-action="Create" class="btn btn-sm btn-outline-primary">Restock</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
