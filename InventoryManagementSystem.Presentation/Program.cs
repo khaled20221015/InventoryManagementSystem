@@ -1,5 +1,5 @@
 using InventoryManagementSystem.Business.Extensions;
-using Microsoft.AspNetCore.Identity;
+using InventoryManagementSystem.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +21,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Identity
+// Authentication must always come before authorization.
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await DbSeeder.SeedAsync(app.Services);
 
 app.Run();
