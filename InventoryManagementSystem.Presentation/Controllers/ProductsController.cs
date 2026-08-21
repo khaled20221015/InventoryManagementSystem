@@ -20,12 +20,16 @@ namespace InventoryManagementSystem.Presentation.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int? categoryId)
         {
-            var products = await _productService.GetAllAsync();
+            ViewData["Search"] = search;
+            await LoadCategoriesAsync(categoryId);
+
+            var products = await _productService.GetAllAsync(search, categoryId);
 
             return View(products);
         }
+
 
 
         public async Task<IActionResult> Details(int id)
