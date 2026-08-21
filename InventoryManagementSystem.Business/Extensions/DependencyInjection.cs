@@ -19,6 +19,10 @@ namespace InventoryManagementSystem.Business.Extensions
             services.AddScoped<ProductService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<StockService>();
+            services.AddScoped<ReportService>();
+
+            // QuestPDF Community licence: free for students, open source and small companies.
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
             return services;
         }
