@@ -34,6 +34,30 @@
     </div>
 </div>
 
+<div class="row g-3 mb-4">
+    <div class="col-md-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-semibold">Products per category</div>
+            <div class="card-body">
+                <div style="height: 260px">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-semibold">Stock quantity by product</div>
+            <div class="card-body">
+                <div style="height: 260px">
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow-sm">
     <div class="card-header bg-white fw-semibold">Low stock alerts</div>
 
@@ -70,3 +94,56 @@
         </table>
     }
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script>
+
+
+        const categoryNames = @Json.Serialize(Model.CategoryNames);
+        const productsPerCategory = @Json.Serialize(Model.ProductsPerCategory);
+        const topProductNames = @Json.Serialize(Model.TopProductNames);
+        const topProductQuantities = @Json.Serialize(Model.TopProductQuantities);
+
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'doughnut',
+            data: {
+                labels: categoryNames,
+                datasets: [{
+                    data: productsPerCategory,
+                    backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1', '#20c997', '#fd7e14']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('stockChart'), {
+            type: 'bar',
+            data: {
+                labels: topProductNames,
+                datasets: [{
+                    label: 'Stock quantity',
+                    data: topProductQuantities,
+                    backgroundColor: '#0d6efd',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                }
+            }
+        });
+    </script>
+}
