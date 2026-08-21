@@ -53,6 +53,27 @@ namespace InventoryManagementSystem.Presentation.Controllers
         [AllowAnonymous]
         public IActionResult Privacy() => View();
 
+
+
+        [AllowAnonymous]
+        public IActionResult HttpError(int code)
+        {
+            ViewData["Code"] = code;
+
+            ViewData["Message"] = code switch
+            {
+                404 => "The page you asked for does not exist.",
+                403 => "You do not have permission to open this page.",
+                _ => "Something went wrong while handling your request."
+            };
+
+            return View();
+        }
+
+
+
+
+
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
