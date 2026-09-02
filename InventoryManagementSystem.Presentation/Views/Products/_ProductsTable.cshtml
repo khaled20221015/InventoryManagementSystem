@@ -1,0 +1,110 @@
+@model ProductListViewModel
+@{
+    var list = Model.Page;
+}
+
+@if (list.TotalCount == 0)
+{
+    <div class="alert alert-info mb-0">No products match your search.</div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 3.5rem">#</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-end">Stock</th>
+                    <th class="text-end">Min. level</th>
+                    <th>Expiry</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var rowNumber = list.FirstRowNumber;
+                }
+                @foreach (var product in list.Items)
+                {
+                    <tr>
+                        <td class="text-muted">@rowNumber</td>
+                        <td class="fw-semibold">@product.Name</td>
+                        <td>@product.Category?.Name</td>
+                        <td class="text-end">@product.Price.ToString("N2")</td>
+                        <td class="text-end">
+                            @if (product.StockQuantity <= product.MinimumStockLevel)
+                            {
+                                <span class="badge bg-danger">@product.StockQuantity</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@product.StockQuantity</span>
+                            }
+                        </td>
+                        <td class="text-end text-muted">@product.MinimumStockLevel</td>
+                        <td>
+                            @if (product.ExpiryDate is null)
+                            {
+                                <span class="text-muted">&mdash;</span>
+                            }
+                            else
+                            {
+                                var status = ExpiryRules.Status(product.ExpiryDate);
+
+                                <span class="@ExpiryDisplay.TextCss(status)"
+                                      title="@ExpiryDisplay.Label(product.ExpiryDate)">
+                                    @product.ExpiryDate.Value.ToString("yyyy-MM-dd")
+                                </span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+
+                            @if (User.IsInRole(RoleNames.Admin))
+                            {
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            }
+                        </td>
+                    </tr>
+
+                    rowNumber++;
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+        <span class="text-muted small">
+            Showing @list.FirstRowNumber&ndash;@(list.FirstRowNumber + list.Items.Count - 1) of @list.TotalCount
+        </span>
+
+        @if (list.TotalPages > 1)
+        {
+            <nav aria-label="Product pages">
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item @(list.HasPrevious ? null : "disabled")">
+                        <button type="button" class="page-link" data-page="@(list.Page - 1)"
+                                aria-label="Previous page" @(list.HasPrevious ? null : "disabled")>&laquo;</button>
+                    </li>
+
+                    @for (var number = 1; number <= list.TotalPages; number++)
+                    {
+                        <li class="page-item @(number == list.Page ? "active" : null)">
+                            <button type="button" class="page-link" data-page="@number"
+                                    aria-current="@(number == list.Page ? "page" : null)">@number</button>
+                        </li>
+                    }
+
+                    <li class="page-item @(list.HasNext ? null : "disabled")">
+                        <button type="button" class="page-link" data-page="@(list.Page + 1)"
+                                aria-label="Next page" @(list.HasNext ? null : "disabled")>&raquo;</button>
+                    </li>
+                </ul>
+            </nav>
+        }
+    </div>
+}

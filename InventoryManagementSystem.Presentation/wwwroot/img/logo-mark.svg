@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Khaled Inventory">
+  <title>Khaled Inventory</title>
+
+  <defs>
+    <!-- Deep blue, lit from the top left, so the badge reads as a solid object
+         rather than a flat square. -->
+    <linearGradient id="km-body" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="0.55" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1E3A8A"/>
+    </linearGradient>
+
+    <!-- Sheen across the top edge: light catching the lid of a crate. -->
+    <linearGradient id="km-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="15" fill="url(#km-body)"/>
+  <rect width="64" height="64" rx="15" fill="url(#km-sheen)"/>
+
+  <!-- Hairline edge keeps the badge crisp on both dark and light backgrounds. -->
+  <rect x="0.6" y="0.6" width="62.8" height="62.8" rx="14.4"
+        fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2"/>
+
+  <!-- The K is assembled from three detached parts rather than drawn as one
+       letter. The gaps are the idea: separate units standing together, which is
+       what an inventory is. They also keep the letter readable at 16px, where a
+       joined K collapses into a blob.
+
+       The top unit is amber - one item lifted off the stack. It is the only warm
+       note in the mark, so the eye lands there last and the shape stays a K. -->
+  <rect x="15.5" y="13" width="9" height="9" rx="2.5" fill="#F59E0B"/>
+
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+    <path d="M 20 29.5 V 46.8"/>
+    <path d="M 46 16 L 31 32 L 46 48"/>
+  </g>
+</svg>

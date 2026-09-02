@@ -10,6 +10,8 @@ namespace InventoryManagementSystem.Presentation.Models
 
         public List<Product> LowStockProducts { get; set; } = new();
 
+        public List<Product> ExpiringProducts { get; set; } = new();
+
         public List<string> CategoryNames { get; set; } = new();
 
         public List<int> ProductsPerCategory { get; set; } = new();

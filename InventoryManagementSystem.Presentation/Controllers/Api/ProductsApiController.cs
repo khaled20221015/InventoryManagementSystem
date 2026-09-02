@@ -19,7 +19,7 @@ namespace InventoryManagementSystem.Presentation.Controllers.Api
             _productService = productService;
         }
 
-        // GET /api/products?search=mouse
+        // GET /api/products?search=mouse&categoryId=2
         [HttpGet]
         public async Task<ActionResult<List<ProductResponseDto>>> GetAll(string? search, int? categoryId)
         {

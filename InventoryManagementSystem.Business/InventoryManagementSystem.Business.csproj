@@ -4,15 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>db33eed4-4e18-4550-aa78-6ff7a12a79e6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InventoryManagementSystem.DataAccess\InventoryManagementSystem.DataAccess.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <PackageReference Include="QuestPDF" Version="2026.7.3" />
+    <ProjectReference Include="..\InventoryManagementSystem.DataAccess\InventoryManagementSystem.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryManagementSystem.DataAccess.Models
 {
-    // A product in the inventory. Belongs to one category and has many stock movements.
     public class Product
     {
         [Key]
@@ -25,10 +24,12 @@ namespace InventoryManagementSystem.DataAccess.Models
         [Range(0, int.MaxValue)]
         public int StockQuantity { get; set; }
 
-        // When StockQuantity drops to this level the product counts as low stock.
         [Required]
         [Range(0, int.MaxValue)]
         public int MinimumStockLevel { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? ExpiryDate { get; set; }
 
         [Required]
         public int CategoryId { get; set; }

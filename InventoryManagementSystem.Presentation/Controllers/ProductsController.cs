@@ -2,6 +2,7 @@
 using InventoryManagementSystem.Business.Services;
 using InventoryManagementSystem.DataAccess.Identity;
 using InventoryManagementSystem.DataAccess.Models;
+using InventoryManagementSystem.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,14 +21,26 @@ namespace InventoryManagementSystem.Presentation.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index(string? search, int? categoryId)
+        public async Task<IActionResult> Index(string? search, int? categoryId, int page = 1)
         {
-            ViewData["Search"] = search;
             await LoadCategoriesAsync(categoryId);
 
-            var products = await _productService.GetAllAsync(search, categoryId);
+            return View(await BuildListAsync(search, categoryId, page));
+        }
 
-            return View(products);
+        public async Task<IActionResult> Table(string? search, int? categoryId, int page = 1)
+        {
+            return PartialView("_ProductsTable", await BuildListAsync(search, categoryId, page));
+        }
+
+        private async Task<ProductListViewModel> BuildListAsync(string? search, int? categoryId, int page)
+        {
+            return new ProductListViewModel
+            {
+                Page = await _productService.GetPageAsync(search, categoryId, page),
+                Search = search,
+                CategoryId = categoryId
+            };
         }
 
         public async Task<IActionResult> Details(int id)

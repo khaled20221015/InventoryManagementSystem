@@ -1,4 +1,4 @@
-﻿@model List<Product>
+@model ProductListViewModel
 @{
     ViewData["Title"] = "Products";
 }
@@ -14,7 +14,7 @@
 
 <form asp-action="Index" method="get" class="row g-2 mb-3">
     <div class="col-md-5">
-        <input name="search" value="@ViewData["Search"]" class="form-control" placeholder="Search by product name..." />
+        <input name="search" value="@Model.Search" class="form-control" placeholder="Search by product name..." />
     </div>
 
     <div class="col-md-4">
@@ -29,54 +29,13 @@
     </div>
 </form>
 
-@if (Model.Count == 0)
-{
-    <div class="alert alert-info mb-0">No products match your search.</div>
-}
-else
-{
-    <div class="card shadow-sm">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th class="text-end">Price</th>
-                    <th class="text-end">Stock</th>
-                    <th class="text-end">Min. level</th>
-                    <th class="text-end">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var product in Model)
-                {
-                    <tr>
-                        <td class="fw-semibold">@product.Name</td>
-                        <td>@product.Category?.Name</td>
-                        <td class="text-end">@product.Price.ToString("N2")</td>
-                        <td class="text-end">
-                            @if (product.StockQuantity <= product.MinimumStockLevel)
-                            {
-                                <span class="badge bg-danger">@product.StockQuantity</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-success">@product.StockQuantity</span>
-                            }
-                        </td>
-                        <td class="text-end text-muted">@product.MinimumStockLevel</td>
-                        <td class="text-end">
-                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+<div id="products-table"
+     data-url="@Url.Action("Table")"
+     data-search="@Model.Search"
+     data-category-id="@Model.CategoryId">
+    <partial name="_ProductsTable" model="Model" />
+</div>
 
-                            @if (User.IsInRole(RoleNames.Admin))
-                            {
-                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+@section Scripts {
+    <script src="~/js/products-pagination.js" asp-append-version="true"></script>
 }

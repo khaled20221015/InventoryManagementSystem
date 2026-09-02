@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 64" role="img" aria-label="Khaled Inventory">
+  <title>Khaled Inventory</title>
+
+  <defs>
+    <linearGradient id="kf-body" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="0.55" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1E3A8A"/>
+    </linearGradient>
+
+    <linearGradient id="kf-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- The mark, reused at 48px so the lockup and the favicon stay identical. -->
+  <g transform="translate(0 8) scale(0.75)">
+    <rect width="64" height="64" rx="15" fill="url(#kf-body)"/>
+    <rect width="64" height="64" rx="15" fill="url(#kf-sheen)"/>
+    <rect x="0.6" y="0.6" width="62.8" height="62.8" rx="14.4"
+          fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2"/>
+
+    <rect x="15.5" y="13" width="9" height="9" rx="2.5" fill="#F59E0B"/>
+
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+      <path d="M 20 29.5 V 46.8"/>
+      <path d="M 46 16 L 31 32 L 46 48"/>
+    </g>
+  </g>
+
+  <!-- Wordmark. Kept as live text rather than outlines so it stays editable and
+       the file stays small; it falls back through a system UI stack, so it needs
+       no embedded font. -->
+  <text x="60" y="34"
+        font-family="Segoe UI, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif"
+        font-size="25" font-weight="700" letter-spacing="-0.4" fill="#0F172A">Khaled</text>
+
+  <text x="61" y="48"
+        font-family="Segoe UI, -apple-system, system-ui, Roboto, Helvetica, Arial, sans-serif"
+        font-size="10" font-weight="600" letter-spacing="4.1" fill="#64748B">INVENTORY</text>
+</svg>

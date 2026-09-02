@@ -29,6 +29,25 @@
             <dt class="col-sm-3">Minimum stock level</dt>
             <dd class="col-sm-9">@Model.MinimumStockLevel</dd>
 
+            <dt class="col-sm-3">Expiry date</dt>
+            <dd class="col-sm-9">
+                @if (Model.ExpiryDate is null)
+                {
+                    <span class="text-muted">Does not expire</span>
+                }
+                else
+                {
+                    <text>@Model.ExpiryDate.Value.ToString("yyyy-MM-dd")</text>
+
+                    @if (ExpiryRules.NeedsAttention(Model.ExpiryDate))
+                    {
+                        var status = ExpiryRules.Status(Model.ExpiryDate);
+
+                        <span class="@ExpiryDisplay.BadgeCss(status) ms-1">@ExpiryDisplay.Label(Model.ExpiryDate)</span>
+                    }
+                }
+            </dd>
+
             <dt class="col-sm-3">Description</dt>
             <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Description) ? "—" : Model.Description)</dd>
         </dl>

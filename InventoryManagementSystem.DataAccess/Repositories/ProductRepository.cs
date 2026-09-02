@@ -15,6 +15,13 @@ namespace InventoryManagementSystem.DataAccess.Repositories
 
         public async Task<List<Product>> GetAllAsync(string? search = null, int? categoryId = null)
         {
+            return await BuildQuery(search, categoryId)
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
+
+        private IQueryable<Product> BuildQuery(string? search, int? categoryId)
+        {
             var query = _context.Products
                 .Include(p => p.Category)
                 .AsQueryable();
@@ -29,11 +36,24 @@ namespace InventoryManagementSystem.DataAccess.Repositories
                 query = query.Where(p => p.CategoryId == categoryId.Value);
             }
 
-            return await query
-                .OrderBy(p => p.Name)
-                .ToListAsync();
+            return query;
         }
 
+        public async Task<(List<Product> Items, int TotalCount)> GetPagedAsync(
+            string? search, int? categoryId, int skip, int take)
+        {
+            var query = BuildQuery(search, categoryId);
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderBy(p => p.Name)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
 
         public async Task<Product?> GetByIdAsync(int id)
         {
@@ -41,7 +61,6 @@ namespace InventoryManagementSystem.DataAccess.Repositories
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
-
 
         public async Task<bool> NameExistsAsync(string name, int excludeId)
         {

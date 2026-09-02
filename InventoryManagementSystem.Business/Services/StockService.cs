@@ -34,9 +34,14 @@ namespace InventoryManagementSystem.Business.Services
                 return $"Not enough stock. Available quantity: {product.StockQuantity}.";
             }
 
-            product.StockQuantity += dto.TransactionType == TransactionTypes.In
-                ? dto.Quantity
-                : -dto.Quantity;
+            if (dto.TransactionType == TransactionTypes.In)
+            {
+                product.StockQuantity += dto.Quantity;
+            }
+            else
+            {
+                product.StockQuantity -= dto.Quantity;
+            }
 
             var transaction = new StockTransaction
             {

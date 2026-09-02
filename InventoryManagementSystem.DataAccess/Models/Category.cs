@@ -1,8 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InventoryManagementSystem.DataAccess.Models
 {
-    // A group of products, for example "Laptops" or "Accessories".
     public class Category
     {
         [Key]

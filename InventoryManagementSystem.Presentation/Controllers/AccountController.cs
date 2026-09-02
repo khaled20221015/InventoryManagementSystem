@@ -20,15 +20,36 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login() => View(new LoginDto());
+        public IActionResult Login()
+        {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(new LoginDto());
+        }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginDto model)
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user is not null && user.IsDeleted)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 return View(model);
             }
 
@@ -45,16 +66,25 @@ namespace InventoryManagementSystem.Presentation.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Register() => View(new RegisterDto());
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = RoleNames.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDto model)
         {
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            var deleted = await _userManager.FindByEmailAsync(model.Email);
+
+            if (deleted is not null && deleted.IsDeleted)
+            {
+                ModelState.AddModelError(string.Empty, "This email belongs to a deleted account. Please contact an administrator.");
+
                 return View(model);
             }
 
@@ -79,9 +109,10 @@ namespace InventoryManagementSystem.Presentation.Controllers
             }
 
             await _userManager.AddToRoleAsync(user, RoleNames.Employee);
-            await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return RedirectToAction("Index", "Home");
+            TempData["Success"] = $"{user.FullName} was created with the {RoleNames.Employee} role.";
+
+            return RedirectToAction("Index", "Users");
         }
 
         [HttpPost]
@@ -95,6 +126,9 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult AccessDenied() => View();
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

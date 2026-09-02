@@ -16,10 +16,7 @@ namespace InventoryManagementSystem.Presentation.Controllers
         private readonly ProductService _productService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public StockController(
-            StockService stockService,
-            ProductService productService,
-            UserManager<ApplicationUser> userManager)
+        public StockController(StockService stockService, ProductService productService, UserManager<ApplicationUser> userManager)
         {
             _stockService = stockService;
             _productService = productService;

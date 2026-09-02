@@ -1,0 +1,70 @@
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.brand-mark {
+    width: 32px;
+    height: 32px;
+
+    filter: drop-shadow(0 2px 6px rgba(59, 130, 246, .45));
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+}
+
+.brand-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+.brand-sub {
+    font-size: .58rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    opacity: .6;
+}
+
+.brand-hero {
+    width: 68px;
+    height: 68px;
+    filter: drop-shadow(0 6px 18px rgba(37, 99, 235, .3));
+}
+
+@media (max-width: 575.98px) {
+    .brand-sub {
+        display: none;
+    }
+}
+
+.chat-contacts {
+    max-height: 210px;
+    overflow-y: auto;
+    font-size: .8125rem;
+}
+
+.chat-count-slot {
+    flex: 0 0 1.4rem;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.chat-count {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 .28rem;
+    border-radius: 999px;
+    background-color: #dc3545;
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

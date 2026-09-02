@@ -27,6 +27,10 @@ namespace InventoryManagementSystem.Business.DTOs
         [Display(Name = "Minimum stock level")]
         public int MinimumStockLevel { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Expiry date")]
+        public DateTime? ExpiryDate { get; set; }
+
         [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
         [Display(Name = "Category")]
         public int CategoryId { get; set; }

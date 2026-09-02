@@ -1,4 +1,4 @@
-# Inventory Management System
+﻿# Inventory Management System
 
 A small ASP.NET Core 8 MVC application for managing products, categories and stock movements,
 built with a **Three-Tier Architecture**.
@@ -8,7 +8,7 @@ built with a **Three-Tier Architecture**.
 | Project | Layer | What lives here |
 | --- | --- | --- |
 | `InventoryManagementSystem.Presentation` | Presentation | Controllers, Razor views, the REST API, `Program.cs` |
-| `InventoryManagementSystem.Business` | Business Logic | Services (the rules), DTOs (validation), the PDF report |
+| `InventoryManagementSystem.Business` | Business Logic | Services (the rules), DTOs (validation) |
 | `InventoryManagementSystem.DataAccess` | Data Access | EF Core models, `ApplicationDbContext`, repositories, Identity, migrations |
 
 Dependencies only point downwards: **Presentation → Business → DataAccess**.
@@ -36,7 +36,7 @@ Validation happens in two places:
 | Role | Can do |
 | --- | --- |
 | `Admin` | Everything: products CRUD, categories, users, dashboard, stock |
-| `Employee` | View and search products, view details, record stock movements, dashboard, PDF report |
+| `Employee` | View and search products, view details, record stock movements, dashboard |
 
 Role names live in `RoleNames.cs`. New accounts created through **Register** get `Employee`.
 
@@ -53,7 +53,6 @@ Seeded on first run by `DbSeeder`:
 - Stock movements (In / Out) with an audit trail of who recorded each one
 - Low-stock alerts on the dashboard
 - Dashboard charts (Chart.js) — products per category, stock per product
-- PDF inventory report (QuestPDF)
 - REST API for products at `/api/products`, documented with Swagger in development
 - One friendly error page for 404, 403 and unhandled errors
 

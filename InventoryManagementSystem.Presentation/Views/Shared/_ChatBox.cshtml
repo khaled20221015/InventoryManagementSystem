@@ -1,0 +1,42 @@
+﻿<div id="chat-box" class="card shadow position-fixed" style="bottom: 1rem; right: 1rem; width: 320px; z-index: 1050;">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-2">
+        <span class="fw-semibold small">
+            &#128172; Chat
+            <span id="chat-unread" class="badge rounded-pill bg-danger ms-1 d-none">0</span>
+        </span>
+        <button type="button" id="chat-toggle" class="btn btn-sm btn-outline-light py-0 px-2">&ndash;</button>
+    </div>
+
+    <div id="chat-body">
+        <div class="p-2 border-bottom">
+
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle w-100 d-flex align-items-center"
+                        type="button" id="chat-to" data-bs-toggle="dropdown" data-bs-display="static"
+                        data-can-broadcast="@(User.IsInRole(RoleNames.Admin) ? "true" : "false")"
+                        data-bs-auto-close="outside"
+                        aria-expanded="false">
+                    <span id="chat-to-label" class="flex-grow-1 text-start text-truncate">Select a user...</span>
+                </button>
+
+                <div class="dropdown-menu w-100 p-0">
+                    <div class="p-2 border-bottom">
+                        <input id="chat-search" class="form-control form-control-sm"
+                               type="search" autocomplete="off" placeholder="Search by name..." />
+                    </div>
+
+                    <ul class="list-unstyled mb-0 chat-contacts" id="chat-to-menu"></ul>
+
+                    <div id="chat-no-match" class="p-2 text-muted small d-none">No user matches that name.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chat-messages" class="p-2 overflow-auto bg-white" style="height: 220px; font-size: .8125rem;"></div>
+
+        <div class="p-2 border-top d-flex gap-2">
+            <input id="chat-text" class="form-control form-control-sm" placeholder="Type a message..." autocomplete="off" maxlength="500" />
+            <button type="button" id="chat-send" class="btn btn-sm btn-primary">Send</button>
+        </div>
+    </div>
+</div>

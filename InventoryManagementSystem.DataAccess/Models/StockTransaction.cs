@@ -1,10 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using InventoryManagementSystem.DataAccess.Identity;
 
 namespace InventoryManagementSystem.DataAccess.Models
 {
-    // One stock movement: who moved how much of which product, in or out.
     public class StockTransaction
     {
         [Key]
@@ -20,7 +19,6 @@ namespace InventoryManagementSystem.DataAccess.Models
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
-        // Either TransactionTypes.In or TransactionTypes.Out.
         [Required]
         [MaxLength(20)]
         public string TransactionType { get; set; } = string.Empty;
