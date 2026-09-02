@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37516.0 d17.14
+VisualStudioVersion = 17.14.37516.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem", "InventoryManagementSystem\InventoryManagementSystem.csproj", "{5AE58308-F34E-40C8-BCA9-C2C728179D59}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Presentation", "InventoryManagementSystem.Presentation\InventoryManagementSystem.Presentation.csproj", "{2BFDA8FF-E9C6-4BA7-9032-A7951CAB2913}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Business", "InventoryManagementSystem.Business\InventoryManagementSystem.Business.csproj", "{23B11674-DA96-4C79-9586-A7B913F939F5}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5AE58308-F34E-40C8-BCA9-C2C728179D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5AE58308-F34E-40C8-BCA9-C2C728179D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5AE58308-F34E-40C8-BCA9-C2C728179D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AE58308-F34E-40C8-BCA9-C2C728179D59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BFDA8FF-E9C6-4BA7-9032-A7951CAB2913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BFDA8FF-E9C6-4BA7-9032-A7951CAB2913}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BFDA8FF-E9C6-4BA7-9032-A7951CAB2913}.Release|Any CPU.ActiveCfg = Release|Any CPU

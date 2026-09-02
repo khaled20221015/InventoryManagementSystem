@@ -30,8 +30,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
             return View(products);
         }
 
-
-
         public async Task<IActionResult> Details(int id)
         {
             var product = await _productService.GetByIdAsync(id);
@@ -44,8 +42,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
             return View(product);
         }
 
-
-
         [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Create()
         {
@@ -53,9 +49,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
             return View(new ProductFormDto());
         }
-
-
-
 
         [HttpPost]
         [Authorize(Roles = RoleNames.Admin)]
@@ -80,9 +73,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
             return View(model);
         }
 
-
-
-
         [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Edit(int id)
         {
@@ -97,9 +87,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
             return View(model);
         }
-
-
-
 
         [HttpPost]
         [Authorize(Roles = RoleNames.Admin)]
@@ -124,10 +111,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
             return View(model);
         }
 
-
-
-
-
         [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
@@ -140,9 +123,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
             return View(product);
         }
-
-
-
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = RoleNames.Admin)]
@@ -162,8 +142,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
 
         private async Task LoadCategoriesAsync(int? selectedId = null)
         {

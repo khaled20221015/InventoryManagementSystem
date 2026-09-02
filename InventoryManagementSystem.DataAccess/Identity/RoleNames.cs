@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace InventoryManagementSystem.DataAccess.Identity
 {
+    // The two roles of the system. Admin manages everything, Employee only records stock.
     public static class RoleNames
     {
         public const string Admin = "Admin";

@@ -7,10 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Presentation.Controllers.Api
 {
-
-
-
-
     [ApiController]
     [Route("api/products")]
     [Authorize]

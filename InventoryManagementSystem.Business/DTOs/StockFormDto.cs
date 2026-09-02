@@ -9,13 +9,9 @@ namespace InventoryManagementSystem.Business.DTOs
         [Display(Name = "Product")]
         public int ProductId { get; set; }
 
-
-
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1.")]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; } = 1;
-
-
 
         [Required(ErrorMessage = "Transaction type is required.")]
         [Display(Name = "Transaction type")]

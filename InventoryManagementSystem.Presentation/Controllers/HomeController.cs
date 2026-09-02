@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using InventoryManagementSystem.Business.Services;
 using InventoryManagementSystem.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Presentation.Controllers
 {
+    // Dashboard + the single error page used by the whole application.
     [Authorize]
     public class HomeController : Controller
     {
@@ -48,15 +48,9 @@ namespace InventoryManagementSystem.Presentation.Controllers
             return View(model);
         }
 
-
-
+        // Shown for 404, 403 and any other status code (see UseStatusCodePagesWithReExecute).
         [AllowAnonymous]
-        public IActionResult Privacy() => View();
-
-
-
-        [AllowAnonymous]
-        public IActionResult HttpError(int code)
+        public IActionResult Error(int code = 500)
         {
             ViewData["Code"] = code;
 
@@ -68,17 +62,6 @@ namespace InventoryManagementSystem.Presentation.Controllers
             };
 
             return View();
-        }
-
-
-
-
-
-        [AllowAnonymous]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

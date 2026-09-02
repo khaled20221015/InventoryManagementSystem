@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryManagementSystem.DataAccess.Models
 {
+    // A product in the inventory. Belongs to one category and has many stock movements.
     public class Product
     {
         [Key]
@@ -25,21 +25,17 @@ namespace InventoryManagementSystem.DataAccess.Models
         [Range(0, int.MaxValue)]
         public int StockQuantity { get; set; }
 
+        // When StockQuantity drops to this level the product counts as low stock.
         [Required]
         [Range(0, int.MaxValue)]
         public int MinimumStockLevel { get; set; }
 
-        // FK
         [Required]
         public int CategoryId { get; set; }
 
-        // Navigation Property
         [ForeignKey(nameof(CategoryId))]
-        public Category Category { get; set; } = null!; // null! = Null-forgiving operator
+        public Category Category { get; set; } = null!;
 
-        // Navigation Property
-        public List<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
-
-        // Represents a product in the inventory system.
+        public List<StockTransaction> StockTransactions { get; set; } = new();
     }
 }

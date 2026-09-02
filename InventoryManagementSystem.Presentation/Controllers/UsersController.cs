@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagementSystem.Presentation.Controllers
 {
-
-
     [Authorize(Roles = RoleNames.Admin)]
     public class UsersController : Controller
     {

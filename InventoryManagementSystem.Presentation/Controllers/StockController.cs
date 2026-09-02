@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InventoryManagementSystem.Presentation.Controllers
 {
-
-
     [Authorize]
     public class StockController : Controller
     {

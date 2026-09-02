@@ -5,10 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// Swagger ]
+// Swagger is only used to try out the REST API while developing.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// One call registers the Business layer, which registers the Data Access layer.
 builder.Services.AddBusiness(builder.Configuration);
 
 var app = builder.Build();
@@ -24,11 +25,10 @@ else
     app.UseHsts();
 }
 
-app.UseStatusCodePagesWithReExecute("/Home/HttpError", "?code={0}");
-
+// Sends 404, 403, ... to the same friendly error page.
+app.UseStatusCodePagesWithReExecute("/Home/Error", "?code={0}");
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -42,6 +42,7 @@ app.MapControllerRoute(
 
 app.MapControllers();
 
+// Creates/updates the database, then the roles and the default admin account.
 await DbSeeder.SeedAsync(app.Services);
 
 app.Run();

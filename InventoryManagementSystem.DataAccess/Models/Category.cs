@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace InventoryManagementSystem.DataAccess.Models
 {
+    // A group of products, for example "Laptops" or "Accessories".
     public class Category
     {
         [Key]
@@ -15,7 +15,6 @@ namespace InventoryManagementSystem.DataAccess.Models
         [MaxLength(500)]
         public string? Description { get; set; }
 
-        // Navigation Property
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Product> Products { get; set; } = new();
     }
 }
