@@ -39,6 +39,7 @@ namespace InventoryManagementSystem.DataAccess.Repositories
             return query;
         }
 
+        
         public async Task<(List<Product> Items, int TotalCount)> GetPagedAsync(
             string? search, int? categoryId, int skip, int take)
         {

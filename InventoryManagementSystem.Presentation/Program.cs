@@ -121,10 +121,22 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
     Authorization = new[] { new AdminOnlyDashboardFilter() }
 });
 
-RecurringJob.AddOrUpdate<ExpiryAlertJob>(
-    ExpiryAlertJob.RecurringJobId,
-    job => job.RunAsync(),
-    "* * * * */2");
+// Expiry alert emails are switched off. Uncomment to turn them back on.
+// The cron field order is: minute hour day-of-month month day-of-week
+//   "*/2 * * * *"  -> every 2 minutes   (demo)
+//   "0 8 * * *"    -> once a day at 08:00 (sensible for real use)
+// Note: "* * * * */2" is NOT every 2 minutes. It runs every single minute on
+// alternate days of the week, which is why the mailbox filled up.
+//
+// RecurringJob.AddOrUpdate<ExpiryAlertJob>(
+//     ExpiryAlertJob.RecurringJobId,
+//     job => job.RunAsync(),
+//     "*/2 * * * *");
+
+// Hangfire keeps recurring jobs in the database, so commenting the line above
+// is not enough on its own: the job would still fire from stored state. This
+// removes it, and does nothing once it is already gone.
+RecurringJob.RemoveIfExists(ExpiryAlertJob.RecurringJobId);
 
 await DbSeeder.SeedAsync(app.Services);
 
