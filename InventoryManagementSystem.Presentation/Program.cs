@@ -121,6 +121,13 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
     Authorization = new[] { new AdminOnlyDashboardFilter() }
 });
 
+// Must run before anything touches Hangfire storage. On a machine where the
+// database does not exist yet, this is what creates it: MigrateAsync builds
+// the schema, then the roles, the administrator account and the demo data are
+// seeded. Hangfire can create its own tables but not the database itself, so
+// calling it first would crash a fresh clone with "Cannot open database".
+await DbSeeder.SeedAsync(app.Services);
+
 // Expiry alert emails are switched off. Uncomment to turn them back on.
 // The cron field order is: minute hour day-of-month month day-of-week
 //   "*/2 * * * *"  -> every 2 minutes   (demo)
@@ -133,11 +140,11 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 //     job => job.RunAsync(),
 //     "*/2 * * * *");
 
-// Hangfire keeps recurring jobs in the database, so commenting the line above
-// is not enough on its own: the job would still fire from stored state. This
-// removes it, and does nothing once it is already gone.
-RecurringJob.RemoveIfExists(ExpiryAlertJob.RecurringJobId);
-
-await DbSeeder.SeedAsync(app.Services);
+// Nothing registers the job, so Hangfire never schedules it. Note that a
+// recurring job already stored in the database keeps running even after this
+// block is commented out, because Hangfire schedules from stored state rather
+// than from code. To clear one, delete it from the /hangfire dashboard, or run:
+//     RecurringJob.RemoveIfExists(ExpiryAlertJob.RecurringJobId);
+// once, after the database exists.
 
 app.Run();
